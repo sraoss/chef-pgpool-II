@@ -1,0 +1,33 @@
+{
+	"host_entry": {
+		"node1": "alice",
+		"node2": "bob"
+	},
+	"rpm": {
+		"pgdg-centos93-9.3-1.noarch.rpm": "c35ad2b589082869b04f0c7d979c5098830f5194de1f6a2bd79ee734ebfb32ff",
+		"pgpool-II-pg93-3.3.3-1.pgdg.x86_64.rpm": "2af5a3f4463c3a6fdb997cc96cc09fc844c7926f5746b7b2a4ef2f1f1aaea5e9",
+		"pgpoolAdmin-3.3.1-1.pgdg.noarch.rpm": "15f03d1b45447b65c058d7c193678d0d44c83583f58a7e3efebb952b3b515123"
+	},
+	"yum-package": ["httpd", "php", "php-pgsql", "php-mbstring"],
+	"pg_data": "/var/lib/pgsql/9.3/data",
+	"pg_backups": "/var/lib/pgsql/9.3/backups",
+	"pg_home": "/usr/pgsql-9.3",
+	"pg_port": "5432",
+	"master_db": false,
+	"master_pgpool": false,
+	"backend_hostname0": "alice",
+	"backend_hostname1": "bob",
+	"wd_hostname": "bob",
+	"heartbeat_destination0": "alice",
+	"other_pgpool_hostname0": "alice",
+	"pgpool_logdir": "/var/log/pgpool",
+	"pcp_userid":"admin",
+	"pcp_md5passwd":"ba777e4c2f15c11ea8ac3be7e0440aa0",
+	"run_list": [
+		"recipe[pgpool-ha::user]",
+		"recipe[pgpool-ha::package]",
+		"recipe[pgpool-ha::pg-set]",
+		"recipe[pgpool-ha::pool-set]",
+		"recipe[pgpool-ha::service]"
+	]
+}

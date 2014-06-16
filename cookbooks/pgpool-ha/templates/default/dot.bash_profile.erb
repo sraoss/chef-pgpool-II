@@ -1,0 +1,17 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=<%= node['pg_home'] %>/bin:$PATH:$HOME/bin
+LD_LIBRARY_PATH=<%= node['pg_home'] %>/lib:$LD_LIBRARY_PATH
+
+PGDATA=<%= node['pg_data'] %>
+PGBACKUPS=<%= node['pg_backups'] %>
+PGPORT=<%= node['pg_port'] %>
+
+export PATH LD_LIBRARY_PATH PGDATA PGBACKUPS PGPORT

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+REMOTE_HOST=$1
+REMOTE_PGDATA=$2
+
+PGHOME=<%= node['pg_home'] %>
+
+ssh -T postgres@$REMOTE_HOST "
+LD_LIBRARY_PATH=$PGHOME/lib:LD_LIBRARH_PATH;
+$PGHOME/bin/pg_ctl -w -D $REMOTE_PGDATA start 2>/dev/null 1>/dev/null < /dev/null &"

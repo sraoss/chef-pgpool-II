@@ -1,0 +1,33 @@
+#!/bin/bash -x
+
+PGDATA=$1
+REMOTE_HOST=$2
+REMOTE_PGDATA=$3
+
+PORT=<%= node['pg_port'] %>
+PGHOME=<%= node['pg_home'] %>
+ARCH=<%= node['pg_backups'] %>
+
+rm  -rf $ARCH/*
+
+ssh -T postgres@$REMOTE_HOST "
+LD_LIBRARY_PATH=$PGHOME/lib:LD_LIBRARH_PATH;
+rm -rf $REMOTE_PGDATA
+$PGHOME/bin/pg_basebackup -h $HOSTNAME -U postgres -D $REMOTE_PGDATA -x -c fast
+rm $REMOTE_PGDATA/trigger"
+
+ssh -T postgres@$REMOTE_HOST "rm -rf $ARCH/*"
+ssh -T postgres@$REMOTE_HOST "mkdir -p $REMOTE_PGDATA/pg_xlog/archive_status"
+
+ssh -T postgres@$REMOTE_HOST "
+cd $REMOTE_PGDATA;
+cp postgresql.conf postgresql.conf.bak;
+sed -e 's/#*hot_standby = off/hot_standby = on/' postgresql.conf.bak > postgresql.conf;
+rm -f postgresql.conf.bak;
+cat > recovery.conf << EOT
+standby_mode = 'on'
+primary_conninfo = 'host="$HOSTNAME" port=$PORT user=postgres'
+restore_command = 'scp $HOSTNAME:$ARCH/%f %p'
+trigger_file = '$PGDATA/trigger'
+EOT
+"

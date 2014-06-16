@@ -1,0 +1,33 @@
+{
+	"id": "default",
+	"groups": [
+		{
+			"name": "postgres",
+			"gid": "26"
+		},
+		{
+			"name": "apache",
+			"gid": "48"
+		}
+	],
+	"users": [
+		{
+			"name": "postgres",
+			"home": "/var/lib/pgsql",
+			"password": "$1$jGLvn/AJ$THeHHUa7MlPaCW6dkY1X91",
+			"shell": "/bin/bash",
+			"uid": "26",
+			"gid": "postgres"
+		},
+		{
+			"name": "apache",
+			"home": "/home/apache",
+			"password": "",
+			"shell": "/sbin/nologin",
+			"uid": "48",
+			"gid": "apache"
+		}
+	],
+	"secret_key": "pool-test",
+	"public_key": "pool-test.pub"
+}
